@@ -1,8 +1,9 @@
 import './App.scss'
 import {connect, sendMsg} from "./api";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Header from "./components/Header";
 import {ChatHistory, ChatMessage} from "./components/ChatHistory";
+import ChatInput from "./components/ChatInput";
 
 function App() {
 
@@ -15,16 +16,18 @@ function App() {
         })
     }, [chatHistory]);
 
-    const send = () => {
-      console.log("hello")
-        sendMsg("hello")
+    const send = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            sendMsg(event.currentTarget.value);
+            event.currentTarget.value = "";
+        }
     }
 
   return (
       <div>
           <Header />
           <ChatHistory chatHistory={chatHistory} />
-          <button onClick={send}>Hit</button>
+          <ChatInput send={send} />
       </div>
   )
 }
