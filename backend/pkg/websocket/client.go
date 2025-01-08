@@ -16,11 +16,6 @@ type Client struct {
 	Pool *Pool
 }
 
-type Message struct {
-	Type int    `json:"type"`
-	Body string `json:"body"`
-}
-
 func NewClient(conn *websocket.Conn, pool *Pool) *Client {
 	id := atomic.AddUint64(&clientIdCounter, 1)
 	return &Client{
@@ -49,7 +44,7 @@ func (c *Client) Read() {
 			log.Println(err)
 			return
 		}
-		message := Message{Type: messageType, Body: string(p)}
+		message := NewMessage(messageType, string(p), c.ID)
 		c.Pool.Broadcast <- message
 		log.Printf("Message Received: %+v\n", message)
 	}

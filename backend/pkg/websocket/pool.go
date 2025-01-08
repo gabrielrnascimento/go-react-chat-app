@@ -26,7 +26,8 @@ func (pool *Pool) Start() {
 			fmt.Println("Size of Connection Pool: ", len(pool.Clients))
 			for client := range pool.Clients {
 				fmt.Println(client)
-				err := client.Conn.WriteJSON(Message{Type: 1, Body: "New User Joined..."})
+				message := NewMessage(1, "New User Joined...", client.ID)
+				err := client.Conn.WriteJSON(message)
 				if err != nil {
 					return
 				}
@@ -36,7 +37,8 @@ func (pool *Pool) Start() {
 			delete(pool.Clients, client)
 			fmt.Println("Size of Connection Pool: ", len(pool.Clients))
 			for client := range pool.Clients {
-				err := client.Conn.WriteJSON(Message{Type: 1, Body: "User Disconnected..."})
+				message := NewMessage(1, "User Disconnected...", client.ID)
+				err := client.Conn.WriteJSON(message)
 				if err != nil {
 					return
 				}
