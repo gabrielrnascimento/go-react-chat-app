@@ -13,7 +13,6 @@ function App() {
         connect((msg: MessageEvent) => {
             try {
                 const parsedMessage = JSON.parse(msg.data);
-                console.log({parsedMessage});
                 setChatHistory([...chatHistory, parsedMessage]);
             } catch (e) {
                 console.error("Failed to parse incoming message: ", e);

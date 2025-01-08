@@ -8,7 +8,6 @@ const connect = (cb: (msg: MessageEvent) => void)  => {
     };
 
     socket.onmessage = msg => {
-        console.log(msg);
         cb(msg);
     };
 

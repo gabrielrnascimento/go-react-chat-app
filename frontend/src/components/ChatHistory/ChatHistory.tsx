@@ -5,6 +5,7 @@ import "./ChatHistory.scss";
 export interface ChatMessage {
     type: number,
     body: string
+    user: number
 }
 
 interface ChatHistoryProps {
@@ -17,7 +18,7 @@ export const ChatHistory: React.FC<ChatHistoryProps> = ({ chatHistory }) => {
             <h2>Chat History</h2>
             <div className="messages">
                 {chatHistory.map((message, index) => (
-                    <Message key={index} content={message.body} />
+                    <Message key={index} content={message.body}  user={message.user}/>
                 ))}
             </div>
         </div>
