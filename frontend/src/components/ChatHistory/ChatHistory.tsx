@@ -1,8 +1,10 @@
 import React from "react";
+import Message from "../Message";
 import "./ChatHistory.scss";
 
 export interface ChatMessage {
-    data: string;
+    type: number,
+    body: string
 }
 
 interface ChatHistoryProps {
@@ -13,9 +15,11 @@ export const ChatHistory: React.FC<ChatHistoryProps> = ({ chatHistory }) => {
     return (
         <div className="ChatHistory">
             <h2>Chat History</h2>
-            {chatHistory.map((msg, index) => (
-                <p key={index}>{msg.data}</p>
-            ))}
+            <div className="messages">
+                {chatHistory.map((message, index) => (
+                    <Message key={index} content={message.body} />
+                ))}
+            </div>
         </div>
     );
 };

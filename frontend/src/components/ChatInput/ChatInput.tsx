@@ -8,7 +8,7 @@ interface ChatInputProps {
 export const ChatInput = (props: ChatInputProps) => {
     return (
         <div className="ChatInput">
-            <input onKeyDown={props.send} />
+            <input onKeyDown={props.send} placeholder={"Type a message... Press Enter to send"} />
         </div>
     )
 }

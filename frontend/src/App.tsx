@@ -11,8 +11,13 @@ function App() {
 
     useEffect(() => {
         connect((msg: MessageEvent) => {
-            console.log("new message")
-            setChatHistory([...chatHistory, {data: msg.data}])
+            try {
+                const parsedMessage = JSON.parse(msg.data);
+                console.log({parsedMessage});
+                setChatHistory([...chatHistory, parsedMessage]);
+            } catch (e) {
+                console.error("Failed to parse incoming message: ", e);
+            }
         })
     }, [chatHistory]);
 
