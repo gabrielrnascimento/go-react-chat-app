@@ -1,36 +1,12 @@
 import './App.scss';
-import { connect, sendMsg } from './api';
-import React, { useEffect, useState } from 'react';
-import Header from './components/Header';
-import { ChatHistory, ChatMessage } from './components/ChatHistory';
-import ChatInput from './components/ChatInput';
+import Header from './components/atoms/Header';
+import Chat from './components/molecules/Chat/Chat.tsx';
 
 function App() {
-    const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
-
-    useEffect(() => {
-        connect((msg: MessageEvent) => {
-            try {
-                const parsedMessage = JSON.parse(msg.data);
-                setChatHistory([...chatHistory, parsedMessage]);
-            } catch (e) {
-                console.error('Failed to parse incoming message: ', e);
-            }
-        });
-    }, [chatHistory]);
-
-    const send = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            sendMsg(event.currentTarget.value);
-            event.currentTarget.value = '';
-        }
-    };
-
     return (
         <div>
             <Header />
-            <ChatHistory chatHistory={chatHistory} />
-            <ChatInput send={send} />
+            <Chat />
         </div>
     );
 }
