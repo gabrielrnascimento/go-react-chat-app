@@ -1,3 +1,3 @@
-import {Message} from "./Message.tsx";
+import { Message } from './Message.tsx';
 
 export default Message;

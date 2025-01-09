@@ -1,4 +1,4 @@
-import "./Message.scss"
+import './Message.scss';
 
 interface MessageProps {
     user: string;
@@ -8,12 +8,8 @@ interface MessageProps {
 export const Message = (props: MessageProps) => {
     return (
         <div className="MessageWrapper">
-            <div className="User">
-                {"User: " + props.user}
-            </div>
-            <div className="Message">
-                {"Message: " + props.content}
-            </div>
+            <div className="User">{'User: ' + props.user}</div>
+            <div className="Message">{'Message: ' + props.content}</div>
         </div>
-    )
-}
+    );
+};

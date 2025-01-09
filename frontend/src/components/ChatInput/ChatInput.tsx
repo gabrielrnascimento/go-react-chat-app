@@ -1,5 +1,5 @@
-import React from "react";
-import "./ChatInput.scss";
+import React from 'react';
+import './ChatInput.scss';
 
 interface ChatInputProps {
     send: (event: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -8,7 +8,10 @@ interface ChatInputProps {
 export const ChatInput = (props: ChatInputProps) => {
     return (
         <div className="ChatInput">
-            <input onKeyDown={props.send} placeholder={"Type a message... Press Enter to send"} />
+            <input
+                onKeyDown={props.send}
+                placeholder={'Type a message... Press Enter to send'}
+            />
         </div>
-    )
-}
+    );
+};

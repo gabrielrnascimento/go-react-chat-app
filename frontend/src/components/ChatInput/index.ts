@@ -1,3 +1,3 @@
-import {ChatInput} from "./ChatInput.tsx";
+import { ChatInput } from './ChatInput.tsx';
 
 export default ChatInput;
