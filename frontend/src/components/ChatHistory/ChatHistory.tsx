@@ -5,7 +5,7 @@ import './ChatHistory.scss';
 export interface ChatMessage {
     type: number;
     body: string;
-    user: number;
+    user: string;
 }
 
 interface ChatHistoryProps {
