@@ -20,9 +20,22 @@ const connect = (cb: (msg: MessageEvent) => void) => {
     };
 };
 
-const sendMsg = (msg: string) => {
-    console.log('sending msg: ', msg);
-    socket.send(msg);
+const sendUsername = (username: string) => {
+    console.log('sending username: ', username);
+    const data = {
+        type: 'username',
+        content: username,
+    };
+    socket.send(JSON.stringify(data));
 };
 
-export { connect, sendMsg };
+const sendMessage = (message: string) => {
+    console.log('sending message: ', message);
+    const data = {
+        type: 'chat',
+        content: message,
+    };
+    socket.send(JSON.stringify(data));
+};
+
+export { connect, sendMessage, sendUsername };

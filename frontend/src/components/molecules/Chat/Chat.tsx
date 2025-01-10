@@ -1,9 +1,13 @@
-import { connect, sendMsg } from '../../../api';
+import { connect, sendMessage } from '../../../api';
 import React, { useEffect, useState } from 'react';
 import { ChatHistory, ChatMessage } from '../../atoms/ChatHistory';
-import ChatInput from '../../atoms/ChatInput';
+import Input from '../../atoms/ChatInput';
 
-function Chat() {
+interface ChatProps {
+    username: string;
+}
+
+function Chat({ username }: ChatProps) {
     const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
 
     useEffect(() => {
@@ -19,15 +23,18 @@ function Chat() {
 
     const send = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            sendMsg(event.currentTarget.value);
+            sendMessage(event.currentTarget.value);
             event.currentTarget.value = '';
         }
     };
 
     return (
         <div>
-            <ChatHistory chatHistory={chatHistory} />
-            <ChatInput send={send} />
+            <ChatHistory chatHistory={chatHistory} username={username} />
+            <Input
+                onEnter={send}
+                placeholder={'Type a message... Press Enter to send'}
+            />
         </div>
     );
 }

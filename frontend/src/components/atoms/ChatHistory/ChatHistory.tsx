@@ -10,9 +10,13 @@ export interface ChatMessage {
 
 interface ChatHistoryProps {
     chatHistory: ChatMessage[];
+    username: string;
 }
 
-export const ChatHistory: React.FC<ChatHistoryProps> = ({ chatHistory }) => {
+export const ChatHistory: React.FC<ChatHistoryProps> = ({
+    chatHistory,
+    username,
+}) => {
     return (
         <div className="ChatHistory">
             <h2>Chat History</h2>
@@ -22,6 +26,7 @@ export const ChatHistory: React.FC<ChatHistoryProps> = ({ chatHistory }) => {
                         key={index}
                         content={message.body}
                         user={message.user}
+                        isCurrentUser={message.user === username}
                     />
                 ))}
             </div>

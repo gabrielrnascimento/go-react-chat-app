@@ -1,3 +1,3 @@
-import { ChatInput } from './ChatInput.tsx';
+import { Input } from './Input.tsx';
 
-export default ChatInput;
+export default Input;
