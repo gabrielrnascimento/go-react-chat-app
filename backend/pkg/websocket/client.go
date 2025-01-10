@@ -1,6 +1,7 @@
 package websocket
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"sync/atomic"
@@ -11,9 +12,10 @@ import (
 var clientIdCounter uint64
 
 type Client struct {
-	ID   string
-	Conn *websocket.Conn
-	Pool *Pool
+	ID       string
+	Username string
+	Conn     *websocket.Conn
+	Pool     *Pool
 }
 
 func NewClient(conn *websocket.Conn, pool *Pool) *Client {
@@ -39,13 +41,39 @@ func (c *Client) Read() {
 	}()
 
 	for {
-		messageType, p, err := c.Conn.ReadMessage()
+		_, p, err := c.Conn.ReadMessage()
 		if err != nil {
 			log.Println(err)
 			return
 		}
-		message := NewMessage(messageType, string(p), c.ID)
-		c.Pool.Broadcast <- message
-		log.Printf("Message Received: %+v\n", message)
+
+		var msg map[string]string
+		err = json.Unmarshal(p, &msg)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+
+		messageType, ok := msg["type"]
+		if !ok {
+			log.Println("Message type not found")
+			return
+		}
+
+		messageContent, ok := msg["content"]
+		if !ok {
+			log.Println("Message content not found")
+			return
+		}
+
+		switch messageType {
+		case "chat":
+			c.Pool.Broadcast <- NewMessage(1, messageContent, c.Username)
+		case "username":
+			c.Username = messageContent
+			c.Pool.Broadcast <- NewMessage(1, fmt.Sprintf("%s has joined the chat", c.Username), c.Username)
+		}
+
+		log.Printf("Message Received: %+v\n", msg["body"])
 	}
 }
